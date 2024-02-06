@@ -14,7 +14,7 @@ def log_to_copyleaks(email, api_key):
         "https://id.copyleaks.com/v3/account/login/api",
         headers={"Content-Type": "application/json"},
         data=json.dumps({"email": email, "key": api_key}),
-    )
+    timeout=60)
 
     # if status is not 200, exit
     if login_result.status_code != 200:
@@ -59,7 +59,7 @@ class PlagiarismChecker:
             f"{self.base_url}/{scan_id}",
             headers=self.headers,
             data=json.dumps(data),
-        )
+        timeout=60)
 
         if response.status_code != 201:  # Status code: 201 - Created
             print(
@@ -149,7 +149,7 @@ if __name__ == "__main__":
             result = requests.get(
                 f"https://api.lablab.ai/plagiarism/status/{scan_id}",
                 headers={"Authorization": f"Bearer {internal_api_key}"},
-            )
+            timeout=60)
 
             # if status is not 200, not delivered, continue
             if result.status_code != 200:
