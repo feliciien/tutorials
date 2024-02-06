@@ -16,7 +16,7 @@ def log_to_copyleaks(email, api_key):
         "https://id.copyleaks.com/v3/account/login/api",
         headers={"Content-Type": "application/json"},
         data=json.dumps({"email": email, "key": api_key}),
-    )
+    timeout=60)
 
     # if status is not 200, exit
     if login_result.status_code != 200:
@@ -54,7 +54,7 @@ class AIGeneratedContentCheck:
             self.base_url.format(scan_id=scan_id),
             headers=self.headers,
             data=json.dumps(data),
-        )
+        timeout=60)
 
         # if error - AI Generated Content Check failed
         if response.status_code != 200:
